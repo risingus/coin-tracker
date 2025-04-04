@@ -1,0 +1,27 @@
+{
+  "name": "finance_timer_dashboard",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/vue-query": "^5.71.1",
+    "chart.js": "^4.4.8",
+    "date-fns": "^4.1.0",
+    "pinia": "^3.0.1",
+    "vue": "^3.5.13",
+    "vue-chart-3": "^3.1.8"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/tsconfig": "^0.7.0",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0",
+    "vue-tsc": "^2.2.4"
+  },
+  "packageManager": "yarn@4.8.1"
+}

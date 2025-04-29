@@ -6,7 +6,10 @@ import { LineChart } from 'vue-chart-3';
 
 Chart.register(...registerables);
 
-const { from, to } = defineProps(['from', 'to'])
+const { from, to } = defineProps<{
+  from: string,
+  to: string
+}>()
 const { data: ratesHistory } = useExchangeRatesHistory({ from, to })
 
 const chartData = computed(() => {

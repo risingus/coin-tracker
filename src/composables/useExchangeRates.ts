@@ -6,9 +6,13 @@ interface UseExchangeRates {
   to: string
 }
 
+const placeholder = {
+  value: 0,
+  currencyValue: '$ 0.00'
+}
 const errorRequest = ({from, to}: {from: string, to: string}) => new Error(`Erro ao converter de ${from} para ${to}`)
 
-async function getExchangeRates({from, to}: {from: string, to: string}) {
+async function getExchangeRates({ from, to }: { from: string, to: string }): Promise<{ value: number, currencyValue: string }> {
   const response = await fetch(baseUrl + '/latest' + `?base${from}` + `&currencies=${to}`)
 
   if (!response.ok) {
@@ -23,7 +27,7 @@ async function getExchangeRates({from, to}: {from: string, to: string}) {
   
   return {
     value: rate,
-    formatedValue: new Intl.NumberFormat('en-us', {
+    currencyValue: new Intl.NumberFormat('en-us', {
       minimumFractionDigits: 2,
       currency: 'USD',
       style: 'currency',
@@ -38,6 +42,7 @@ const useExchangeRates = ({from, to}: UseExchangeRates) => {
     queryFn: () => getExchangeRates({from, to}),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
+    placeholderData: placeholder,
     staleTime: 1000 * 60 * 60, // ? 1 hora
   })
 }

@@ -1,11 +1,23 @@
 <script lang='ts' setup>
-  import { useCurrencies } from '../composables/useCurrencies'
+import { useAttrs } from 'vue';
+import { useCurrencies } from '../composables/useCurrencies'
+
   const { data: currencies } = useCurrencies()
+  const attrs = useAttrs()
+  const emit = defineEmits(['change'])
+
+  function handleChange(event: Event ) {
+    const selected = event.target as HTMLSelectElement
+    if (!selected) return
+    const parsedSelected = JSON.parse(selected.value)
+    emit('change', parsedSelected)
+  }
+
 </script>
 
 <template>
-  <select class='select'>
-    <option v-for='currency in currencies' :value='currency'
+  <select class='select' v-bind='attrs' @change='handleChange'>
+    <option v-for='currency in currencies' :value='JSON.stringify(currency)'
       class='select-option'>
       {{ `${currency.code} - ${currency.name}` }}
     </option>
@@ -14,7 +26,6 @@
 
 
 <style scoped>
-
 .select {
   width: 100%;
   padding: 0.5rem;

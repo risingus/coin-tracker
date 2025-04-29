@@ -2,14 +2,19 @@ import baseUrl from '../constants/base-url';
 import apiKey from '../constants/api-key';
 import { useQuery } from '@tanstack/vue-query';
 
-type Currency = {
-  code: string;
-  name: string;
-};
-
 type CurrenciesResponse = Record<string, Currency>;
 
 const errorRequest = new Error('Erro inesperado ao buscar moedas')
+
+function sortCurrencies(currencies: Currency[]) {
+  return currencies.sort((a, b) => {
+    const aCodeUpperCase = a.code.toUpperCase();
+    const bCodeUpperCase = b.code.toUpperCase();
+    if (aCodeUpperCase < bCodeUpperCase) return -1
+    if (aCodeUpperCase > bCodeUpperCase) return 1
+    return 0
+  })
+}
 
 async function fetchCurrencies() {
   const params = new URLSearchParams();
@@ -37,12 +42,12 @@ async function fetchCurrencies() {
 
   const uniqueCurrenciesList = new Set(Object.values(filteredCurrenciesArray))
 
-  return Array.from(uniqueCurrenciesList).map((currency) => {
+  return sortCurrencies(Array.from(uniqueCurrenciesList).map((currency) => {
     return ({
       code: currency.code,
       name: currency.name
     })
-  })
+  }))
 }
 
 const useCurrencies = () => {

@@ -43,14 +43,18 @@ import rippleClickEffect from '../util/ripple-click-effect';
     border-radius: 6px;
     padding: 0.5rem 1rem;
     text-transform: capitalize;
+    background-color: var(--primary);
+    color: var(--text-secondary);
+    font-family: Nunito;
+    font-weight: 700;
   }
 
   .button-round, .button-secondary {
     background-color: transparent;
-    transition: background-color 200ms ease-in, outline 200ms ease-in;
+    transition: background-color 150ms ease-in, outline 150ms ease-in;
     &:not(:disabled) {
       &:hover {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.1);
       }
       &:focus-visible {
         outline: 1px solid black;
@@ -60,10 +64,18 @@ import rippleClickEffect from '../util/ripple-click-effect';
 
   .button-round {
     display: flex;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2rem;
+    border-radius: 999999px;
     padding: 0;
-    font-size: .8rem;
+    font-size: 1rem;
+    color: var(--neutral);
+
+    & > * {
+      line-height: 0;
+    }
   }
 </style>

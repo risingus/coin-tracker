@@ -84,9 +84,9 @@ import { useCurrencies } from '../composables/useCurrencies'
     </div>
   </div>
 
-  <button @click="handleOpenModal">
+  <Button  @click="handleOpenModal">
     open modal
-  </button>
+  </Button>
 </template>
 
 
@@ -110,7 +110,7 @@ import { useCurrencies } from '../composables/useCurrencies'
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    background-color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.1);
     width: 30rem;
     border-radius: 6px;
     z-index: 1;
@@ -120,12 +120,12 @@ import { useCurrencies } from '../composables/useCurrencies'
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      background-color: rgba(255, 255, 255, 0.3);
       border-radius: 6px;
-      padding: 0 .5rem;
+      padding: 0 1rem;
+      color: var(--neutral);
      
       .pi-search {
-        font-size: .8rem;
+        font-size: 1rem;
       }
       .search-input {
         box-shadow: none;
@@ -135,10 +135,12 @@ import { useCurrencies } from '../composables/useCurrencies'
         height: 100%;
         padding: 1rem 0.5rem;
         background-color: transparent;
+        color: var(--text-primary);
       }
     }
 
     .results-section {
+      border-top: 1px solid var(--neutral);
       display: flex;
       flex-direction: column;
       align-items: center;

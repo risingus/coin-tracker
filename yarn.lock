@@ -1048,6 +1048,7 @@ __metadata:
     date-fns: "npm:^4.1.0"
     pinia: "npm:^3.0.2"
     primeicons: "npm:^7.0.0"
+    swapy: "npm:^1.0.5"
     typescript: "npm:~5.7.2"
     vite: "npm:^6.2.0"
     vue: "npm:^3.5.13"
@@ -1786,6 +1787,13 @@ __metadata:
   dependencies:
     copy-anything: "npm:^3.0.2"
   checksum: 10c0/aa49ebe6653e963020bc6a1ed416d267dfda84cfcc3cbd3beffd75b72e44eb9df7327215f3e3e77528f6e19ad8895b16a4964fdcd56d1799d14350db8c92afbc
+  languageName: node
+  linkType: hard
+
+"swapy@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "swapy@npm:1.0.5"
+  checksum: 10c0/0d6cff16c66d833463173aa93711b8aa4397584719346f8b6734b73de853bf012378d52de7e19eb9679f6ea09c312c9958d8ae5bf3ee999cde5a151e7c6fe49f
   languageName: node
   linkType: hard
 

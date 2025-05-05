@@ -1,5 +1,5 @@
-import { defineStore, storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 export const useCurrenciesStore = defineStore('currenciesStore', () => {
   const currencies = ref([] as Currency[])

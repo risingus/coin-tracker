@@ -15,15 +15,13 @@ function handleShowChart() {
   chartShow.value = !chartShow.value
 }
 
-
-
 </script>
 
 <template>
   <div class='rates-card'>
     <div class='rates-card-header'>
       <div class='rates-card-rate'>
-        {{ rate?.currencyValue }}
+        {{ rate?.currencyValue || 'N/A' }}
       </div>
 
       <div class='rates-card-from'>
@@ -34,14 +32,13 @@ function handleShowChart() {
         {{ currency.code }}
       </div>
 
-      <Button round @click='handleShowChart'>
-        O
+      <Button round @click='handleShowChart' data-swapy-no-drag>
+        <i class="pi pi-chevron-down" v-if='!chartShow'></i>
+        <i class="pi pi-chevron-up" v-if='chartShow'></i>
       </Button>
     </div>
 
-    <div class='rates-card-graph-container' v-if='chartShow'>
-      <RateHistoryChart from='USD' :to='currency.code' />
-    </div>
+    <RateHistoryChart from='USD' :to='currency.code' v-if='chartShow' />
 
   </div>
 </template>
@@ -52,17 +49,14 @@ function handleShowChart() {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
 
   .rates-card-header {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr) 2.5rem;
     align-items: center;
     gap: 2rem;
     justify-items: start;
-  }
-
-  .rates-card-graph-container {
-
   }
 }
 </style>

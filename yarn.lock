@@ -1046,6 +1046,7 @@ __metadata:
     "@vue/tsconfig": "npm:^0.7.0"
     chart.js: "npm:^4.4.8"
     date-fns: "npm:^4.1.0"
+    gsap: "npm:^3.13.0"
     pinia: "npm:^3.0.2"
     primeicons: "npm:^7.0.0"
     swapy: "npm:^1.0.5"
@@ -1115,6 +1116,13 @@ __metadata:
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: 10c0/386d011a553e02bc594ac2ca0bd6d9e4c22d7fa8cfbfc448a6d148c59ea881b092db9dbe3547ae4b88e55f1b01f7c4a2ecc53b310c042793e63aa44cf6c257f2
+  languageName: node
+  linkType: hard
+
+"gsap@npm:^3.13.0":
+  version: 3.13.0
+  resolution: "gsap@npm:3.13.0"
+  checksum: 10c0/a42dd2e02467a4abe96409aaf6cd0e5d697c72e05ec13c18c2271330493983aa63cc717c9dd0740fda2f884d0f56c7b98fc18b13500f0c1da94864985840da7c
   languageName: node
   linkType: hard
 

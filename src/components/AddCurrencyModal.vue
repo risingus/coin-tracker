@@ -64,14 +64,16 @@ import { useCurrencies } from '../composables/useCurrencies'
     <div class='modal-content'>
       <div class='search-input-container'>
         <i class="pi pi-search"></i>
-        <input class='search-input' @input='changeSearch' :value='query' ref='inputRef' />
+        <input class='search-input' @input='changeSearch' :value='query'
+          ref='inputRef' />
         <Button @click='handleCloseModal' round>
           <i class="pi pi-times"></i>
         </Button>
       </div>
-      
+
       <div class='results-section'>
-        <div v-for='currency in results' :key='currency.code' class='result-item' @click='() => handleAddCurrency(currency)'>
+        <div v-for='currency in results' :key='currency.code'
+          class='result-item' @click='() => handleAddCurrency(currency)'>
           <i class="pi pi-dollar"></i>
           <div>
             {{ currency.code }}
@@ -84,7 +86,7 @@ import { useCurrencies } from '../composables/useCurrencies'
     </div>
   </div>
 
-  <Button  @click="handleOpenModal">
+  <Button @click="handleOpenModal">
     open modal
   </Button>
 </template>

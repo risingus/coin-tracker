@@ -1,11 +1,6 @@
 import { useQuery } from '@tanstack/vue-query';
 import baseUrl from '../constants/base-url';
 
-interface UseExchangeRates {
-  from: string
-  to: string
-}
-
 const placeholder = {
   value: 0,
   currencyValue: '$ 0.00'
@@ -36,7 +31,7 @@ async function getExchangeRates({ from, to }: { from: string, to: string }): Pro
 }
 
 
-const useExchangeRates = ({from, to}: UseExchangeRates) => {
+const useExchangeRates = ({ from, to }: { from: string, to: string }) => {
   return useQuery({
     queryKey: ['exchange-rates', from, to],
     queryFn: () => getExchangeRates({from, to}),

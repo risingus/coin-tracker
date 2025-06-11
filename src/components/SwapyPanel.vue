@@ -15,7 +15,7 @@ const slotItemMap = ref<SlotItemMapArray>([...utils.initSlotItemMap(currencies.v
 const slottedItems = computed(() => utils.toSlottedItems(currencies.value, 'code', slotItemMap.value))
 
 watch(currencies, () => {
-  utils.dynamicSwapy(swapy.value, currencies.value, 'code', slotItemMap.value, (value: SlotItemMapArray) => slotItemMap.value = value),
+  return utils.dynamicSwapy(swapy.value, currencies.value, 'code', slotItemMap.value, (value: SlotItemMapArray) => slotItemMap.value = value),
   { deep: true, }
 })
 
@@ -25,7 +25,6 @@ onMounted(() => {
       manualSwap: true,
     })
     swapy.value.onSwap((event) => {
-      console.log('swap', event)
       requestAnimationFrame(() => {
         slotItemMap.value = event.newSlotItemMap.asArray
       })
@@ -44,7 +43,7 @@ onUnmounted(() => {
 <div ref="container" class="swapy-panel">
 
 <div v-for="{ slotId, itemId, item: currency } in slottedItems" :key="slotId" :data-swapy-slot="slotId" class="item">
-  <div v-if="currency"  :data-swapy-item="itemId" :key="itemId">
+  <div v-if="currency"  :key="itemId" :data-swapy-item="itemId">
     <RatesCard :currency='currency' />
   </div>
 </div>

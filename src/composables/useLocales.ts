@@ -31,7 +31,7 @@ async function getLocales({ query, type }: { query: string, type: 'city' | 'coun
         }
       })
       : []
-  } catch (error) {
+  } catch {
     return []
   }
 }

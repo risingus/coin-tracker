@@ -71,11 +71,11 @@ LineController.prototype.draw = function () {
   const ctx = chart.ctx
   const originalStroke = ctx.stroke
 
-  ctx.stroke = function () {
+  ctx.stroke = function (...args: unknown[]) {
     ctx.save()
     ctx.shadowColor = ctx.strokeStyle as string
     ctx.shadowBlur = 8
-    originalStroke.apply(this, arguments as unknown as [Path2D])
+    originalStroke.apply(this, args as unknown as [path: Path2D] )
     ctx.restore()
   }
   originalLineDraw.apply(this, [])

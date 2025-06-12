@@ -1,21 +1,17 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref, nextTick } from 'vue'
+import { onMounted, onUnmounted, ref, nextTick, watch } from 'vue'
 import { gsap } from 'gsap'
 import Button from './Button.vue'
-import { useCurrenciesStore } from '../stores/use-currencies-store'
-import { useCurrencies } from '../composables/useCurrencies'
 import { useDebounce } from '../composables/useDebounce'
 import { useThrottle } from '../composables/useThrottle'
+import { useLocales } from '../composables/useLocales'
 
 const show = ref(false)
 const query = ref('')
 const inputRef = ref()
-const { addCurrency } = useCurrenciesStore()
-const { data: currencies } = useCurrencies()
+const { data: results } = useLocales(query)
 const throttle = useThrottle()
 const debounce = useDebounce()
-
-const results = ref<Currency[]>([])
 
 function handleOpenModal() {
 	show.value = true
@@ -31,52 +27,16 @@ function handleCloseModal() {
 	results.value = []
 }
 
-function handleAddCurrency(currency: Currency) {
-	addCurrency(currency)
-	handleCloseModal()
-}
-
 async function changeSearch(event: Event) {
 	const input = event.target as HTMLInputElement
 	query.value = input.value
 
-	results.value =
-		Array.isArray(currencies.value) && input.value
-			? currencies.value.filter((currency: Currency) => {
-					return (
-						currency.code.toUpperCase().startsWith(input.value.toUpperCase()) ||
-						currency.name.toUpperCase().includes(input.value.toUpperCase())
-					)
-			  })
-			: []
-
-	await nextTick()
-	const timeline = gsap.timeline()
-	gsap.utils.toArray<Element>('.result-item').forEach((item, index) => {
-		if (index === 0) {
-			item.setAttribute('data-selected', 'true')
-		}
-		timeline.fromTo(
-			item,
-			{
-				translateY: '100%',
-				opacity: 0,
-			},
-			{
-				opacity: 1,
-				duration: 0.6,
-				translateY: '0%',
-				ease: 'power4.out',
-			},
-			index * 0.08
-		)
-	})
 }
 
 async function handleChangeInput(event: Event) {
 	debounce(async () => {
 		await changeSearch(event)
-	}, 200)
+	}, 350)
 }
 
 function closeOnEsc(event: KeyboardEvent) {
@@ -152,7 +112,7 @@ const onEnter = () => {
 	if (selectedItemIndex === -1) return
 	const currency = results.value?.[selectedItemIndex]
 	if (!currency) return
-	handleAddCurrency(currency)
+	// handleAddCurrency(currency)
 }
 
 onMounted(() => {
@@ -162,7 +122,38 @@ onMounted(() => {
 onUnmounted(() => {
 	document.removeEventListener('keydown', closeOnEsc)
 })
+
+
+watch(results, async () => {
+	await nextTick()
+	const timeline = gsap.timeline()
+	gsap.utils.toArray<Element>('.result-item').forEach((item, index) => {
+		if (index === 0) {
+			item.setAttribute('data-selected', 'true')
+		}
+		timeline.fromTo(
+			item,
+			{
+				translateY: '100%',
+				opacity: 0,
+			},
+			{
+				opacity: 1,
+				duration: 0.6,
+				translateY: '0%',
+				ease: 'power4.out',
+			},
+			index * 0.08
+		)
+	})
+})
 </script>
+
+
+    name: locale['display_name'],
+          lat: Number(locale.lat),
+          lon: Number(locale.lon),
+          type,
 
 <template>
 	<div v-if="show" class="modal-overlay" @keydown.{esc}="handleCloseModal">
@@ -185,24 +176,24 @@ onUnmounted(() => {
 
 			<div class="results-section">
 				<div
-					v-for="(currency, index) in results"
-					:key="currency.code"
+					v-for="(locale, index) in results"
+					:key="locale.name"
 					class="result-item"
 					@:pointerenter="() => onPointerEnter(index)"
-					@click="() => handleAddCurrency(currency)">
-					<i class="pi pi-dollar"></i>
+          >
+					<!-- <i class="pi pi-dollar"></i> -->
 					<div>
-						{{ currency.code }}
+						{{ locale.name }}
 					</div>
 					<div>
-						{{ currency.name }}
+						{{ locale.type }}
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<Button @click="handleOpenModal">open modal</Button>
+	<Button @click="handleOpenModal">time</Button>
 </template>
 
 <style scoped>
@@ -276,7 +267,7 @@ onUnmounted(() => {
 				width: 100%;
 
 				display: grid;
-				grid-template-columns: 1rem 5rem 1fr;
+				grid-template-columns: repeat(2, 1fr);
 				align-items: center;
 				justify-content: start;
 
@@ -289,6 +280,7 @@ onUnmounted(() => {
 					grid-template-columns: 1fr;
 					align-items: center;
 					justify-items: start;
+          overflow: hidden;
 				}
 			}
 

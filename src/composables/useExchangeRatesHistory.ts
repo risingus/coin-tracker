@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/vue-query';
 import {format, isValid, sub,} from 'date-fns'
-import {ptBR} from 'date-fns/locale/pt-BR';
-import baseUrl from '../constants/base-url';
+import { ptBR } from 'date-fns/locale/pt-BR';
 import { catchError } from '../util/catch-error';
+import currenciesUrl from '../constants/currenciesUrl';
 
 interface ExchangeRatesHistory  {
   [date: string]: {
@@ -25,7 +25,7 @@ async function fetchExchangeRatesHistory({ from = '', to = '' }) {
     const startDate = format(sub(new Date(), { days: 30 }), 'yyyy-MM-dd');
     const today = format(new Date(), 'yyyy-MM-dd');
 
-    const response = await fetch(baseUrl + '/timeseries' + `?start_date=${startDate}` + `&end_date=${today}` + `&base=${from}` + `&currencies=${to}` )
+    const response = await fetch(currenciesUrl + '/timeseries' + `?start_date=${startDate}` + `&end_date=${today}` + `&base=${from}` + `&currencies=${to}`)
     
     if (!response.ok) {
       throw fetchExchangeRatesHistoryError(to)

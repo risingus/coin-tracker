@@ -1,6 +1,5 @@
-import baseUrl from '../constants/base-url';
-import apiKey from '../constants/api-key';
 import { useQuery } from '@tanstack/vue-query';
+import currenciesUrl from '../constants/currenciesUrl';
 
 type CurrenciesResponse = Record<string, Currency>;
 
@@ -18,9 +17,9 @@ function sortCurrencies(currencies: Currency[]) {
 
 async function fetchCurrencies() {
   const params = new URLSearchParams();
-  params.append('api_key', apiKey);
+  params.append('api_key', import.meta.env.VITE_FX_RATES_API_SECRET);
   
-  const response = await fetch(baseUrl + '/currencies' + '?' + params, {
+  const response = await fetch(currenciesUrl + '/currencies' + '?' + params, {
     method: 'get',
   })
 

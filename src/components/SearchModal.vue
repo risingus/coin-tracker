@@ -1,17 +1,25 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref, nextTick, watch } from 'vue'
-import { gsap } from 'gsap'
+import { onMounted, onUnmounted, ref, defineProps } from 'vue'
 import Button from './Button.vue'
 import { useDebounce } from '../composables/useDebounce'
 import { useThrottle } from '../composables/useThrottle'
-import { useLocales } from '../composables/useLocales'
 
 const show = ref(false)
-const query = ref('')
 const inputRef = ref()
-const { data: results } = useLocales(query)
 const throttle = useThrottle()
 const debounce = useDebounce()
+
+const emit = defineEmits(['onConfirm', 'onSearch', 'onClose'])
+
+const {
+  onSearch = () => null,
+	results = [],
+} = defineProps<{
+  onSearch?: (query: string) => void,
+	results: any[]
+}>()
+
+// const results = ref<Currency[]>([])
 
 function handleOpenModal() {
 	show.value = true
@@ -23,20 +31,58 @@ function handleOpenModal() {
 
 function handleCloseModal() {
 	show.value = false
-	query.value = ''
-	results.value = []
+	// query.value = ''
+	emit('onClose')
+	// results.value = []
+}
+
+function handleConfirmSelection(currency: Currency) {
+	emit('onConfirm',currency)
+	handleCloseModal()
 }
 
 async function changeSearch(event: Event) {
 	const input = event.target as HTMLInputElement
-	query.value = input.value
+  emit('onSearch', input.value)
+	// query.value = input.value
 
+	// results.value =
+	// 	Array.isArray(currencies.value) && input.value
+	// 		? currencies.value.filter((currency: Currency) => {
+	// 				return (
+	// 					currency.code.toUpperCase().startsWith(input.value.toUpperCase()) ||
+	// 					currency.name.toUpperCase().includes(input.value.toUpperCase())
+	// 				)
+	// 		  })
+	// 		: []
+
+	// await nextTick()
+	// const timeline = gsap.timeline()
+	// gsap.utils.toArray<Element>('.result-item').forEach((item, index) => {
+	// 	if (index === 0) {
+	// 		item.setAttribute('data-selected', 'true')
+	// 	}
+	// 	timeline.fromTo(
+	// 		item,
+	// 		{
+	// 			translateY: '100%',
+	// 			opacity: 0,
+	// 		},
+	// 		{
+	// 			opacity: 1,
+	// 			duration: 0.6,
+	// 			translateY: '0%',
+	// 			ease: 'power4.out',
+	// 		},
+	// 		index * 0.08
+	// 	)
+	// })
 }
 
 async function handleChangeInput(event: Event) {
 	debounce(async () => {
 		await changeSearch(event)
-	}, 350)
+	}, 200)
 }
 
 function closeOnEsc(event: KeyboardEvent) {
@@ -110,9 +156,9 @@ const onEnter = () => {
 		return item.getAttribute('data-selected') === 'true'
 	})
 	if (selectedItemIndex === -1) return
-	const currency = results.value?.[selectedItemIndex]
-	if (!currency) return
-	// handleAddCurrency(currency)
+	// const currency = results.value?.[selectedItemIndex]
+	// if (!currency) return
+	// handleConfirmSelection(currency)
 }
 
 onMounted(() => {
@@ -121,31 +167,6 @@ onMounted(() => {
 
 onUnmounted(() => {
 	document.removeEventListener('keydown', closeOnEsc)
-})
-
-
-watch(results, async () => {
-	await nextTick()
-	const timeline = gsap.timeline()
-	gsap.utils.toArray<Element>('.result-item').forEach((item, index) => {
-		if (index === 0) {
-			item.setAttribute('data-selected', 'true')
-		}
-		timeline.fromTo(
-			item,
-			{
-				translateY: '100%',
-				opacity: 0,
-			},
-			{
-				opacity: 1,
-				duration: 0.6,
-				translateY: '0%',
-				ease: 'power4.out',
-			},
-			index * 0.08
-		)
-	})
 })
 </script>
 
@@ -157,7 +178,6 @@ watch(results, async () => {
 				<input
 					ref="inputRef"
 					class="search-input"
-					:value="query"
 					@input="handleChangeInput"
 					@keydown.down.prevent="handleMove"
 					@keydown.up.prevent="handleMove"
@@ -170,24 +190,26 @@ watch(results, async () => {
 
 			<div class="results-section">
 				<div
-					v-for="(locale, index) in results"
-					:key="locale.name"
-					class="result-item"
+					v-for="(item, index) in results"
+					:key="index"
+					style='width: 100%;height: 100%;'
 					@:pointerenter="() => onPointerEnter(index)"
-          >
-					<!-- <i class="pi pi-dollar"></i> -->
+					@click="() => handleConfirmSelection(item)"
+					>
+					<slot name="result-item" :item="item" :index="index"></slot>
+					<!-- <i class="pi pi-dollar"></i>
 					<div>
-						{{ locale.name }}
+						{{ currency.code }}
 					</div>
 					<div>
-						{{ locale.type }}
-					</div>
+						{{ currency.name }}
+					</div> -->
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<Button @click="handleOpenModal">time</Button>
+	<Button @click="handleOpenModal">open modal</Button>
 </template>
 
 <style scoped>
@@ -249,7 +271,7 @@ watch(results, async () => {
 			padding: 1rem;
 			height: 20rem;
 			overflow-y: auto;
-
+/* 
 			.result-item {
 				position: relative;
 				will-change: transform, opacity;
@@ -261,7 +283,7 @@ watch(results, async () => {
 				width: 100%;
 
 				display: grid;
-				grid-template-columns: repeat(2, 1fr);
+				grid-template-columns: 1rem 5rem 1fr;
 				align-items: center;
 				justify-content: start;
 
@@ -274,13 +296,12 @@ watch(results, async () => {
 					grid-template-columns: 1fr;
 					align-items: center;
 					justify-items: start;
-          overflow: hidden;
 				}
 			}
 
 			.result-item[data-selected='true'] {
 				background-color: red;
-			}
+			} */
 		}
 	}
 }

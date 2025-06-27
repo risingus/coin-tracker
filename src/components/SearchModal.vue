@@ -12,14 +12,12 @@ const debounce = useDebounce()
 const emit = defineEmits(['onConfirm', 'onSearch', 'onClose'])
 
 const {
-  onSearch = () => null,
 	results = [],
+	buttonText = ''
 } = defineProps<{
-  onSearch?: (query: string) => void,
-	results: any[]
+	results?: unknown[],
+	buttonText?: string
 }>()
-
-// const results = ref<Currency[]>([])
 
 function handleOpenModal() {
 	show.value = true
@@ -31,58 +29,29 @@ function handleOpenModal() {
 
 function handleCloseModal() {
 	show.value = false
-	// query.value = ''
 	emit('onClose')
-	// results.value = []
 }
 
-function handleConfirmSelection(currency: Currency) {
-	emit('onConfirm',currency)
+function handleConfirmSelection(item: unknown) {
+	emit('onConfirm', item)
 	handleCloseModal()
 }
 
-async function changeSearch(event: Event) {
+function changeSearch(event: Event) {
 	const input = event.target as HTMLInputElement
   emit('onSearch', input.value)
-	// query.value = input.value
-
-	// results.value =
-	// 	Array.isArray(currencies.value) && input.value
-	// 		? currencies.value.filter((currency: Currency) => {
-	// 				return (
-	// 					currency.code.toUpperCase().startsWith(input.value.toUpperCase()) ||
-	// 					currency.name.toUpperCase().includes(input.value.toUpperCase())
-	// 				)
-	// 		  })
-	// 		: []
-
-	// await nextTick()
-	// const timeline = gsap.timeline()
-	// gsap.utils.toArray<Element>('.result-item').forEach((item, index) => {
-	// 	if (index === 0) {
-	// 		item.setAttribute('data-selected', 'true')
-	// 	}
-	// 	timeline.fromTo(
-	// 		item,
-	// 		{
-	// 			translateY: '100%',
-	// 			opacity: 0,
-	// 		},
-	// 		{
-	// 			opacity: 1,
-	// 			duration: 0.6,
-	// 			translateY: '0%',
-	// 			ease: 'power4.out',
-	// 		},
-	// 		index * 0.08
-	// 	)
-	// })
+	const items = document.querySelectorAll('.result-item')
+	items.forEach((item, index) => {
+		if (index === 0) {
+			item.setAttribute('data-selected', 'true')
+		}
+	})
 }
 
-async function handleChangeInput(event: Event) {
+function handleChangeInput(event: Event) {
 	debounce(async () => {
-		await changeSearch(event)
-	}, 200)
+		changeSearch(event)
+	}, 350)
 }
 
 function closeOnEsc(event: KeyboardEvent) {
@@ -156,9 +125,9 @@ const onEnter = () => {
 		return item.getAttribute('data-selected') === 'true'
 	})
 	if (selectedItemIndex === -1) return
-	// const currency = results.value?.[selectedItemIndex]
-	// if (!currency) return
-	// handleConfirmSelection(currency)
+	const selectedItem = results[selectedItemIndex]
+	if (!selectedItem) return
+	handleConfirmSelection(selectedItem)
 }
 
 onMounted(() => {
@@ -171,7 +140,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<div v-if="show" class="modal-overlay" @keydown.{esc}="handleCloseModal">
+	<div v-if="show" class="modal-overlay" >
 		<div class="modal-content">
 			<div class="search-input-container">
 				<i class="pi pi-search"></i>
@@ -192,24 +161,16 @@ onUnmounted(() => {
 				<div
 					v-for="(item, index) in results"
 					:key="index"
-					style='width: 100%;height: 100%;'
 					@:pointerenter="() => onPointerEnter(index)"
 					@click="() => handleConfirmSelection(item)"
 					>
-					<slot name="result-item" :item="item" :index="index"></slot>
-					<!-- <i class="pi pi-dollar"></i>
-					<div>
-						{{ currency.code }}
-					</div>
-					<div>
-						{{ currency.name }}
-					</div> -->
+					<slot name="result-item" :item="item" :index="index" />
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<Button @click="handleOpenModal">open modal</Button>
+	<Button @click="handleOpenModal">{{buttonText}}</Button>
 </template>
 
 <style scoped>
@@ -266,42 +227,16 @@ onUnmounted(() => {
 			border-top: 1px solid var(--neutral);
 			display: flex;
 			flex-direction: column;
-			align-items: center;
+			align-items: flex-start;
+			justify-content: flex-start;
 			gap: 0.25rem;
 			padding: 1rem;
 			height: 20rem;
 			overflow-y: auto;
-/* 
-			.result-item {
-				position: relative;
-				will-change: transform, opacity;
-				gap: 1rem;
-				border-radius: 6px;
-				max-height: 2.5rem;
-				cursor: pointer;
-				gap: 1rem;
+
+			& > div {
 				width: 100%;
-
-				display: grid;
-				grid-template-columns: 1rem 5rem 1fr;
-				align-items: center;
-				justify-content: start;
-
-				&:hover {
-					background-color: blue;
-				}
-
-				& > div {
-					display: grid;
-					grid-template-columns: 1fr;
-					align-items: center;
-					justify-items: start;
-				}
 			}
-
-			.result-item[data-selected='true'] {
-				background-color: red;
-			} */
 		}
 	}
 }

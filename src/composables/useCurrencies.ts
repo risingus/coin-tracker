@@ -55,7 +55,7 @@ const useCurrencies = () => {
     queryFn: fetchCurrencies,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 60, // ? 1 hora
+    staleTime: 1000 * 60 * 120, // ? 2 horas
   })
 }
 

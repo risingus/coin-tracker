@@ -87,7 +87,7 @@ const useLocales = (query: Ref<string>) => {
     refetchOnWindowFocus: false,
     retry: false,
     enabled: computed(() => getValidStringFromAny(query.value).length > 2),
-    staleTime: 1000 * 60 * 60, // ? 1 hora
+    staleTime: 1000 * 60 * 120, // ? 2 horas
   })
 }
 

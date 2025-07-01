@@ -13,10 +13,12 @@ const emit = defineEmits(['onConfirm', 'onSearch', 'onClose'])
 
 const {
 	results = [],
-	buttonText = ''
+	buttonText = '',
+	isFetching = false,
 } = defineProps<{
 	results?: unknown[],
-	buttonText?: string
+	buttonText?: string,
+	isFetching?: boolean
 }>()
 
 function handleOpenModal() {
@@ -158,6 +160,7 @@ onUnmounted(() => {
 			</div>
 
 			<div class="results-section">
+				<p v-if="isFetching">Buscando...</p>
 				<div
 					v-for="(item, index) in results"
 					:key="index"

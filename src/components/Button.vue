@@ -1,22 +1,22 @@
 <script lang="ts" setup>
-import { useAttrs } from 'vue';
-import rippleClickEffect from '../util/ripple-click-effect'
+import { useAttrs } from "vue";
+import rippleClickEffect from "../util/ripple-click-effect";
 
-const attrs = useAttrs()
-const emit = defineEmits(['click'])
+const attrs = useAttrs();
+const emit = defineEmits(["click"]);
 const { secondary, round } = defineProps<{
-	secondary?: boolean
-	round?: boolean
-}>()
+  secondary?: boolean;
+  round?: boolean;
+}>();
 
 function handleClick(event: MouseEvent) {
-	rippleClickEffect(event)
-	emit('click', event)
+  rippleClickEffect(event);
+  emit("click", event);
 }
 </script>
 
 <template>
-	<button
+  <button
 		v-if="!round && !secondary"
 		v-bind="attrs"
 		class="button-primary"
@@ -60,10 +60,12 @@ button {
 .button-secondary {
 	background-color: transparent;
 	transition: background-color 150ms ease-in, outline 150ms ease-in;
+
 	&:not(:disabled) {
 		&:hover {
 			background-color: rgba(255, 255, 255, 0.1);
 		}
+
 		&:focus-visible {
 			outline: 1px solid black;
 		}
@@ -82,7 +84,7 @@ button {
 	font-size: 1rem;
 	color: var(--neutral);
 
-	& > * {
+	&>* {
 		line-height: 0;
 	}
 }

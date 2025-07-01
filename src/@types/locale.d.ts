@@ -6,6 +6,7 @@ declare global {
     lon: number | null
     name: string
     type: 'Cidade' | 'País'
+    timezoneId?: string
   }
 }
 

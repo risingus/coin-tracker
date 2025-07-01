@@ -55,8 +55,7 @@ onUnmounted(() => {
 
 <style scoped>
   .swapy-panel {
-    overflow-x: hidden;
-    height: calc(100svh - 6rem);
+    width: 30rem;
   }
 
   .item[data-swapy-highlighted] {

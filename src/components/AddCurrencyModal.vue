@@ -58,7 +58,6 @@ async function search(q: string) {
 
 <style scoped>
 .result-item {
-	position: relative;
 	will-change: transform, opacity;
 	gap: 1rem;
 	border-radius: 6px;

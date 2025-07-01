@@ -40,6 +40,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@date-fns/tz@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@date-fns/tz@npm:1.2.0"
+  checksum: 10c0/411e9d4303b10951f6fd0189d18fb845f0d934a575df2176bc10daf664282c765fb6b057a977e446bbb1229151d89e7788978600a019f1fc24b5c75276d496bd
+  languageName: node
+  linkType: hard
+
 "@esbuild/aix-ppc64@npm:0.25.2":
   version: 0.25.2
   resolution: "@esbuild/aix-ppc64@npm:0.25.2"
@@ -1669,6 +1676,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "finance_timer_dashboard@workspace:."
   dependencies:
+    "@date-fns/tz": "npm:^1.2.0"
     "@tanstack/vue-query": "npm:^5.71.1"
     "@types/node": "npm:^22.14.1"
     "@vitejs/plugin-vue": "npm:^5.2.1"

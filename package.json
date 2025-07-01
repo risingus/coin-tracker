@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@date-fns/tz": "^1.2.0",
     "@tanstack/vue-query": "^5.71.1",
     "chart.js": "^4.4.8",
     "date-fns": "^4.1.0",

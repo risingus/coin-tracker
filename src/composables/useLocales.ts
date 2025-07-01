@@ -71,7 +71,21 @@ async function fetchLocales(query: string) {
     return [
       ...countries,
       ...cities,
-    ]
+    ].sort((a, b) => {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+      const queryUppercase = query.toUpperCase()
+      if (nameA === queryUppercase) return -1;
+      if (nameB === queryUppercase) return 1;
+
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
   } catch (error) {
     console.warn(error)
     throw new Error('Erro ao buscar localidades')
@@ -85,7 +99,7 @@ const useLocales = (query: Ref<string>) => {
     queryFn: async ({ queryKey }) => await fetchLocales(queryKey[1]),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    retry: false,
+    retryDelay: 1000, // ? 1 segundo
     enabled: computed(() => getValidStringFromAny(query.value).length > 2),
     staleTime: 1000 * 60 * 120, // ? 2 horas
   })

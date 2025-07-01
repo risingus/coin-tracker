@@ -3,6 +3,7 @@ import AddTimezoneModal from './components/AddTimezoneModal.vue';
 import SwapyPanelCurrencies from './components/SwapyPanelCurrencies.vue';
 import AddCurrencyModal from './components/AddCurrencyModal.vue';
 import SwapyPanelLocales from './components/SwapyPanelLocales.vue';
+import TestSmoke from './components/TestSmoke.vue';
 
 </script>
 <template>
@@ -11,8 +12,10 @@ import SwapyPanelLocales from './components/SwapyPanelLocales.vue';
     <AddTimezoneModal />
   </header>
   <main>
-    <SwapyPanelCurrencies />
-    <SwapyPanelLocales />
+    <!-- <SwapyPanelCurrencies /> -->
+    <!-- <SwapyPanelLocales /> -->
+     <TestSmoke />
+
   </main>
 </template>
 
@@ -26,11 +29,11 @@ header {
 }
 
 main {
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: flex-start; */
 }
 
 

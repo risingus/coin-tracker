@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref, defineProps } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import Button from './Button.vue'
 import { useDebounce } from '../composables/useDebounce'
 import { useThrottle } from '../composables/useThrottle'
@@ -142,13 +142,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<div v-if="show" class="modal-overlay" >
-		<div class="modal-content">
-			<div class="search-input-container">
-				<i class="pi pi-search"></i>
+	<div v-if="show" class="bg-black/60 h-screen w-screen absolute inset-0 flex flex-row items-center justify-center z-20" >
+		<div class="flex flex-col justify-start bg-white/10 w-[30rem] rounded-md z-10">
+			<div class="flex flex-row items-center justify-between rounded-md px-4 text-neutral">
+				<i class="pi text-base"></i>
 				<input
 					ref="inputRef"
-					class="search-input"
+					class="shadow-none outline-none border-none w-full h-full p-4 pl-2 bg-transparent"
 					@input="handleChangeInput"
 					@keydown.down.prevent="handleMove"
 					@keydown.up.prevent="handleMove"
@@ -159,11 +159,12 @@ onUnmounted(() => {
 				</Button>
 			</div>
 
-			<div class="results-section">
+			<div class="border-t border-neutral flex flex-col items-start justify-start gap-1 p-4 h-80 overflow-y-auto">
 				<p v-if="isFetching">Buscando...</p>
 				<div
 					v-for="(item, index) in results"
 					:key="index"
+					class='w-full'
 					@:pointerenter="() => onPointerEnter(index)"
 					@click="() => handleConfirmSelection(item)"
 					>
@@ -176,71 +177,3 @@ onUnmounted(() => {
 	<Button @click="handleOpenModal">{{buttonText}}</Button>
 </template>
 
-<style scoped>
-.modal-overlay {
-	background-color: rgba(0, 0, 0, 0.6);
-	height: 100vh;
-	width: 100vw;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	z-index: 2;
-
-	.modal-content {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		background-color: rgba(255, 255, 255, 0.1);
-		width: 30rem;
-		border-radius: 6px;
-		z-index: 1;
-
-		.search-input-container {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			justify-content: space-between;
-			border-radius: 6px;
-			padding: 0 1rem;
-			color: var(--neutral);
-
-			.pi-search {
-				font-size: 1rem;
-			}
-
-			.search-input {
-				box-shadow: none;
-				outline: none;
-				border: none;
-				width: 100%;
-				height: 100%;
-				padding: 1rem 0.5rem;
-				background-color: transparent;
-				color: var(--text-primary);
-			}
-		}
-
-		.results-section {
-			border-top: 1px solid var(--neutral);
-			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-			justify-content: flex-start;
-			gap: 0.25rem;
-			padding: 1rem;
-			height: 20rem;
-			overflow-y: auto;
-
-			& > div {
-				width: 100%;
-			}
-		}
-	}
-}
-</style>

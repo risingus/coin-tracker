@@ -58,12 +58,12 @@ watch(results, async () => {
 		@on-close="close"
 		@on-search="search">
 		<template #result-item="{ item }">
-			<div class="result-item">
+			<div class="result-item locale">
 				<i class="pi pi-map-marker"></i>
-				<div>
+				<div class='grid grid-cols-1 items-center justify-items-start overflow-hidden'>
 					{{ (item as Locale).name }}
 				</div>
-				<div>
+				<div class='grid grid-cols-1 items-center justify-items-start overflow-hidden'>
 					{{ (item as Locale).countryCode }} / {{ (item as Locale).type }}
 				</div>
 			</div>
@@ -71,31 +71,12 @@ watch(results, async () => {
 	</SearchModalVue>
 </template>
 
-<style scoped>
-.result-item {
-	will-change: transform, opacity;
-	gap: 1rem;
-	border-radius: 6px;
-	max-height: 2.5rem;
-	cursor: pointer;
-	gap: 1rem; 
-	width: 100%;
+<style scoped>  
+@reference "../style.css";  
 
-	display: grid;
-	grid-template-columns: 2.5rem 1fr 6rem;
-	align-items: center;
-	justify-content: start;
-
-	& > div {
-		display: grid;
-		grid-template-columns: 1fr;
-		align-items: center;
-		justify-items: start;
-		overflow: hidden;
-	}
+.locale {
+  grid-template-columns: 2.5rem 1fr 6rem;
 }
 
-.result-item[data-selected='true'] {
-	background-color: red;
-}
 </style>
+

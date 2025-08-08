@@ -19,7 +19,7 @@ function handleClick(event: MouseEvent) {
   <button
 		v-if="!round && !secondary"
 		v-bind="attrs"
-		class="button-primary"
+		class="btn-base btn-primary"
 		@click="handleClick">
 		<slot />
 	</button>
@@ -27,65 +27,33 @@ function handleClick(event: MouseEvent) {
 	<button
 		v-if="secondary"
 		v-bind="attrs"
-		class="button-secondary"
+		class="btn-base btn-secondary"
 		@click="handleClick">
 		<slot />
 	</button>
 
-	<button v-if="round" v-bind="attrs" class="button-round" @click="handleClick">
+	<button v-if="round" v-bind="attrs" class="btn-base btn-round" @click="handleClick">
 		<slot />
 	</button>
 </template>
 
-<style scoped>
-button {
-	border: none;
-	outline: none;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	position: relative;
-	overflow: hidden;
-	border: 1px solid transparent;
-	border-radius: 6px;
-	padding: 0.5rem 1rem;
-	text-transform: capitalize;
-	background-color: var(--primary);
-	color: var(--text-secondary);
-	font-family: Nunito;
-	font-weight: 700;
+<style scoped>  
+@reference "../style.css";  
+
+.btn-base {
+  @apply flex flex-row items-center justify-center relative overflow-hidden border border-transparent rounded-md outline-none font-nunito font-bold capitalize;
 }
 
-.button-round,
-.button-secondary {
-	background-color: transparent;
-	transition: background-color 150ms ease-in, outline 150ms ease-in;
-
-	&:not(:disabled) {
-		&:hover {
-			background-color: rgba(255, 255, 255, 0.1);
-		}
-
-		&:focus-visible {
-			outline: 1px solid black;
-		}
-	}
+.btn-primary {
+  @apply bg-primary text-text-secondary px-4 py-2;
 }
 
-.button-round {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	width: 2.25rem;
-	height: 2rem;
-	border-radius: 999999px;
-	padding: 0;
-	font-size: 1rem;
-	color: var(--neutral);
+.btn-secondary {
+  @apply bg-transparent text-text-secondary px-4 py-2 transition duration-150 ease-in hover:bg-white/10 focus-visible:outline-black;
+}
 
-	&>* {
-		line-height: 0;
-	}
+.btn-round {
+  @apply w-9 h-8 rounded-full p-0 text-base text-neutral;
 }
 </style>
+

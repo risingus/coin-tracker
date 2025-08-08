@@ -56,30 +56,3 @@ async function search(q: string) {
 	</SearchModalVue>
 </template>
 
-<style scoped>
-.result-item {
-	will-change: transform, opacity;
-	gap: 1rem;
-	border-radius: 6px;
-	max-height: 2.5rem;
-	cursor: pointer;
-	gap: 1rem;
-	width: 100%;
-
-	display: grid;
-	grid-template-columns: 1rem 5rem 1fr;
-	align-items: center;
-	justify-content: start;
-
-	& > div {
-		display: grid;
-		grid-template-columns: 1fr;
-		align-items: center;
-		justify-items: start;
-	}
-}
-
-.result-item[data-selected='true'] {
-	background-color: red;
-}
-</style>

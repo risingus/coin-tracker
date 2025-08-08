@@ -4,17 +4,19 @@ import SwapyPanelCurrencies from './components/SwapyPanelCurrencies.vue';
 import AddCurrencyModal from './components/AddCurrencyModal.vue';
 import SwapyPanelLocales from './components/SwapyPanelLocales.vue';
 import TestSmoke from './components/TestSmoke.vue';
+import TestLiquidGlass from './components/TestLiquidGlass.vue';
 
 </script>
 <template>
-  <header>
+  <!-- <header>
     <AddCurrencyModal />
     <AddTimezoneModal />
-  </header>
+  </header> -->
   <main>
     <!-- <SwapyPanelCurrencies /> -->
     <!-- <SwapyPanelLocales /> -->
-     <TestSmoke />
+     <!-- <TestSmoke /> -->
+      <TestLiquidGlass />
 
   </main>
 </template>

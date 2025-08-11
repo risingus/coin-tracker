@@ -44,7 +44,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="container" class="swapy-panel">
+  <div ref="container" class="w-full flex flex-col">
     <div v-for="{ slotId, itemId, item: locale } in slottedItems" :key="slotId" :data-swapy-slot="slotId" class="item">
       <div v-if="locale"  :key="itemId" :data-swapy-item="itemId">
         <LocalesCard :locale='locale' />
@@ -53,12 +53,3 @@ onUnmounted(() => {
   </div>
 </template>
 
-<style scoped>
-  .swapy-panel {
-    width: 30rem;
-  }
-
-  .item[data-swapy-highlighted] {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-</style>

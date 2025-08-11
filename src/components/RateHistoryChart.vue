@@ -85,5 +85,7 @@ LineController.prototype.draw = function () {
 </script>
 
 <template>
-  <LineChart :chart-data='chartData' :options='chartOptions' />
+  <div class='bg-black rounded-sm'>
+    <LineChart :chart-data='chartData' :options='chartOptions' />
+  </div>
 </template>

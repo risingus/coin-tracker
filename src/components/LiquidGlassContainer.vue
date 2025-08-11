@@ -4,35 +4,23 @@
 </script>
 
 <template>
-	<div class='test'>
 		<div class='card'>
 			<div class='card_inner'>
-				here
+				<slot name="children"  />
 			</div>
 		</div>
-	</div>
 </template>
 
 <style>
-.test {
-	width: 100vw;
-	height: 100svh;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-}
-
-.test .card {
+.card {
 	position: relative;
-	width: 30rem;
-	height: 10rem;
+	min-height: 2rem;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	border-radius: 99em ;
-	background-color: color-mix(in srgb, #bbbbbc 12%, transparent);
+	border-radius: 6px;
+	background-color: color-mix(in srgb, #000000 12%, transparent);
 	box-shadow: inset 0 0 0 1px
 			color-mix(
 				in srgb,
@@ -85,11 +73,10 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	width: calc(100% - 1rem);
-	height: calc(100% - 1rem);
-	border-radius: 99em;
-	background-color: color-mix(in srgb, #bbbbbc 36%, transparent);
-	z-index: -1;
+	flex: 1;
+	margin: 0.05rem;
+	border-radius: 6px;
+	background-color: color-mix(in srgb, #000000 5%, transparent);
 	box-shadow: inset 0 0 0 1px
 			color-mix(
 				in srgb,

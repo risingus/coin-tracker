@@ -50,7 +50,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<div ref="container" class="w-full flex flex-col">
+	<div ref="container" class="w-full flex flex-col gap-2">
 		<div
 			v-for="{ slotId, itemId, item: currency } in slottedItems"
 			:key="slotId"

@@ -43,7 +43,7 @@ async function search(q: string) {
 		@on-close="close"
 		@on-search="search">
 		<template #result-item="{ item }">
-			<div class="result-item">
+			<div class="result-item items-center justify-start grid grid-cols-[1rem_5rem_1fr]">
 				<i class="pi pi-dollar"></i>
 				<div>
 					{{ (item as Currency).code }}
@@ -55,4 +55,5 @@ async function search(q: string) {
 		</template>
 	</SearchModalVue>
 </template>
+
 

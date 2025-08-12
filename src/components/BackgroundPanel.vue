@@ -6,7 +6,7 @@ const numCircles = 100
 
 onMounted(() => {
 	gsap.to('.circle', {
-		width: (i) => `${(i + 1) * 1}vmin`,
+		width: (i) => `${(i + 1) * 1.25}vmin`,
 		height: (i) => `${(i + 1) * 0.5}vmin`,
 		right: (i) => `${(i + 1) * 0.8}vmin`,
 		bottom: (i) => `${(i + 1) * 0.8}vmin`,
@@ -42,11 +42,10 @@ onMounted(() => {
 
 <template>
 	<div class="z-[-1] absolute inset-0 overflow-hidden">
-		<div class="relative w-full h-full brightness-40 blur-sm">
-			<div
-				v-for="i in numCircles"
-				:key="i"
-				class="absolute border-2 border-[rgba(255,255,255,0.7)] rounded-full m-auto opacity-0 circle"></div>
+		<div class="relative w-full h-full">
+			<div v-for="i in numCircles" :key="i"
+				class="absolute border-4 rounded-full border-black m-auto opacity-0 circle">
+			</div>
 		</div>
 	</div>
 </template>

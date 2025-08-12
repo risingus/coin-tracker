@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { onMounted, onUnmounted, ref } from 'vue'
-import Button from './Button.vue'
 import { useDebounce } from '../composables/useDebounce'
 import { useThrottle } from '../composables/useThrottle'
 
@@ -16,8 +15,8 @@ const {
 	buttonText = '',
 	isFetching = false,
 } = defineProps<{
-	results?: unknown[],
-	buttonText?: string,
+	results?: unknown[]
+	buttonText?: string
 	isFetching?: boolean
 }>()
 
@@ -32,6 +31,9 @@ function handleOpenModal() {
 function handleCloseModal() {
 	show.value = false
 	emit('onClose')
+	if (inputRef?.value) {
+		inputRef.value.value = ''
+	}
 }
 
 function handleConfirmSelection(item: unknown) {
@@ -41,7 +43,7 @@ function handleConfirmSelection(item: unknown) {
 
 function changeSearch(event: Event) {
 	const input = event.target as HTMLInputElement
-  emit('onSearch', input.value)
+	emit('onSearch', input.value)
 	const items = document.querySelectorAll('.result-item')
 	items.forEach((item, index) => {
 		if (index === 0) {
@@ -142,38 +144,35 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<div v-if="show" class="bg-black/60 h-screen w-screen absolute inset-0 flex flex-row items-center justify-center z-20" >
-		<div class="flex flex-col justify-start bg-white/10 w-[30rem] rounded-md z-10">
-			<div class="flex flex-row items-center justify-between rounded-md px-4 text-neutral">
-				<i class="pi text-base"></i>
-				<input
-					ref="inputRef"
-					class="shadow-none outline-none border-none w-full h-full p-4 pl-2 bg-transparent"
-					@input="handleChangeInput"
-					@keydown.down.prevent="handleMove"
-					@keydown.up.prevent="handleMove"
-					@keydown.enter.prevent="onEnter" />
+	<a-modal
+		:open="show"
+		centered
+		:footer="null"
+		wrap-class-name="modal"
+		@cancel="handleCloseModal">
+		<div class="flex flex-row items-center justify-between rounded-md px-4">
+			<i class="pi pi-search text-neutral"></i>
+			<input
+				ref="inputRef"
+				class="shadow-none outline-none border-none w-full h-full p-4 pl-2 bg-transparent text-white"
+				@input="handleChangeInput"
+				@keydown.down.prevent="handleMove"
+				@keydown.up.prevent="handleMove"
+				@keydown.enter.prevent="onEnter" />
+		</div>
 
-				<Button round @click="handleCloseModal">
-					<i class="pi pi-times"></i>
-				</Button>
-			</div>
-
-			<div class="border-t border-neutral flex flex-col items-start justify-start gap-1 p-4 h-80 overflow-y-auto">
-				<p v-if="isFetching">Buscando...</p>
-				<div
-					v-for="(item, index) in results"
-					:key="index"
-					class='w-full'
-					@:pointerenter="() => onPointerEnter(index)"
-					@click="() => handleConfirmSelection(item)"
-					>
-					<slot name="result-item" :item="item" :index="index" />
-				</div>
+		<div
+			class="border-t border-neutral flex flex-col items-start justify-start gap-1 p-4 h-80 overflow-y-auto">
+			<p v-if="isFetching">Buscando...</p>
+			<div
+				v-for="(item, index) in results"
+				:key="index"
+				class="w-full"
+				@:pointerenter="() => onPointerEnter(index)"
+				@click="() => handleConfirmSelection(item)">
+				<slot name="result-item" :item="item" :index="index" />
 			</div>
 		</div>
-	</div>
-
-	<Button @click="handleOpenModal">{{buttonText}}</Button>
+	</a-modal>
+	<a-button type="primary" @click="handleOpenModal">{{ buttonText }}</a-button>
 </template>
-

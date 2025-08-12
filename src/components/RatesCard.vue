@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useExchangeRates } from '../composables/useExchangeRates'
-import Button from './Button.vue'
 import RateHistoryChart from './RateHistoryChart.vue'
-import LiquidGlassContainer from './LiquidGlassContainer.vue'
+import { useCurrenciesStore } from '@/stores/use-currencies-store'
+import BaseCard from './BaseCard.vue'
 
+const { removeCurrency } = useCurrenciesStore()
 const { currency } = defineProps<{
 	currency: Currency
 }>()
@@ -17,31 +18,35 @@ function handleShowChart() {
 </script>
 
 <template>
-	<LiquidGlassContainer>
-		<template #children>
-			<div :data-swapy-no-drag="chartShow ? 'true' : null" class="flex flex-col w-full p-4">
-				<div class="grid grid-cols-[repeat(3,1fr)_2.5rem] items-center gap-8 justify-items-start">
-					<div class="rates-card-rate">
-						{{ rate?.currencyValue || 'N/A' }}
-					</div>
+	<div :data-swapy-no-drag="chartShow ? 'true' : null">
+		<BaseCard class='card'>
+			<div class="grid grid-cols-[repeat(3,1fr)_2.5rem] items-center gap-4">
+				<a-statistic title="Valor" :value="rate?.currencyValue || 'N/A'" />
+				<a-statistic title="De" value="USD" />
+				<a-statistic title="Para" :value="currency.code" />
 
-					<div class="rates-card-from">USD</div>
+				<div class="flex flex-col items-center gap-2">
+					<a-popconfirm title="Deletar conversão?" ok-text="Sim"
+						cancel-text="Não" @confirm="() => removeCurrency(currency)">
+						<a-button shape="circle" data-swapy-no-drag>
+							<i class="pi pi-trash"></i>
+						</a-button>
+					</a-popconfirm>
 
-					<div class="rates-card-to">
-						{{ currency.code }}
-					</div>
-
-					<Button round data-swapy-no-drag @click="handleShowChart">
+					<a-button shape="circle" data-swapy-no-drag @click="handleShowChart">
 						<i v-if="!chartShow" class="pi pi-chevron-down"></i>
 						<i v-if="chartShow" class="pi pi-chevron-up"></i>
-					</Button>
+					</a-button>
 				</div>
-
-				<div :class="['transition-[height] duration-500 ease-in-out overflow-hidden', chartShow ? 'h-100 mt-4' : 'h-0 leading-0 m-0 p-0 overflow-hidden ']">
-					<RateHistoryChart v-if="chartShow" from="USD" :to="currency.code" />
-				</div>
-
 			</div>
-		</template>
-	</LiquidGlassContainer>
+
+			<div :class="[
+				'transition-[height] duration-500 ease-in-out overflow-hidden',
+				chartShow ? 'h-100 mt-4' : 'h-0 leading-0 m-0 p-0 overflow-hidden ',
+			]">
+				<RateHistoryChart v-if="chartShow" from="USD" :to="currency.code" />
+			</div>
+		</BaseCard>
+	</div>
 </template>
+

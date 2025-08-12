@@ -10,8 +10,9 @@ interface CityResponse {
 }
 
 async function getCountries(query: string) {
-  const response = await fetch(`https://restcountries.com/v3.1/name/${query}`)
-  if (!response.ok) return []
+  try {
+    const response = await fetch(`https://restcountries.com/v3.1/name/${query}`)
+    if (!response.ok) return []
   const data = await response.json()
   return Array.isArray(data)
     ? data.map((country) => {
@@ -24,6 +25,10 @@ async function getCountries(query: string) {
       }
     })
     : []
+  } catch (err) {
+    console.warn(err)
+    return []
+  }
 }
 
 async function getCitites(query: string) {
@@ -56,7 +61,8 @@ async function getCitites(query: string) {
         type: 'Cidade',
         }
     })
-  } catch {
+  } catch (err) {
+    console.warn(err)
     return []
   }
 }

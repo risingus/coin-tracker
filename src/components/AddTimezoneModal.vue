@@ -58,7 +58,7 @@ watch(results, async () => {
 		@on-close="close"
 		@on-search="search">
 		<template #result-item="{ item }">
-			<div class="result-item locale">
+			<div class="result-item items-center justify-start grid grid-cols-[2.5rem_1fr_6rem]">
 				<i class="pi pi-map-marker"></i>
 				<div class='grid grid-cols-1 items-center justify-items-start overflow-hidden'>
 					{{ (item as Locale).name }}
@@ -71,12 +71,4 @@ watch(results, async () => {
 	</SearchModalVue>
 </template>
 
-<style scoped>  
-@reference "../style.css";  
-
-.locale {
-  grid-template-columns: 2.5rem 1fr 6rem;
-}
-
-</style>
 

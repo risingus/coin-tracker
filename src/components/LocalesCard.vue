@@ -2,8 +2,10 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { TZDate } from '@date-fns/tz'
 import { format } from 'date-fns'
-import LiquidGlassContainer from './LiquidGlassContainer.vue';
+import { useLocalesStore } from '@/stores/use-locales-store';
+import BaseCard from './BaseCard.vue';
 
+const {removeLocales} = useLocalesStore()
 const { locale } = defineProps<{
 	locale: Locale
 }>()
@@ -35,15 +37,19 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<LiquidGlassContainer>
-		<template #children>
-			<div class="flex  flex-row justify-between w-full p-4 gap-4 h-17 align-middle">
-				{{ locale.name }}
-				<p>
-					{{ formattedTime }}
-				</p>
-			</div>
-		</template>
-	</LiquidGlassContainer>
+	<BaseCard >
+		<div class="grid grid-cols-[5rem_1fr_2rem] gap-4 items-center h-18">
+			<a-statistic title="Hora" :value="formattedTime" />
+			<a-statistic title="Local" :value="locale.name" class='truncate' />
+			<a-popconfirm title="Deletar horário?" ok-text="Sim" cancel-text="Não" @confirm="() => removeLocales(locale)">
+				<a-button shape="circle" data-swapy-no-drag>
+					<i class="pi pi-trash"></i>
+				</a-button>
+			</a-popconfirm>
+		</div>
+	</BaseCard>
+
 </template>
+
+
 

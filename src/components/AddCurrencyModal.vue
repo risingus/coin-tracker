@@ -37,7 +37,7 @@ async function search(q: string) {
 
 <template>
 	<SearchModalVue
-		button-text="Adicionar moeda"
+		type='coin'
 		:results="results"
 		@on-confirm="confirm"
 		@on-close="close"

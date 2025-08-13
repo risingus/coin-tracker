@@ -4,7 +4,7 @@ import SearchModalVue from '../components/SearchModal.vue'
 import { useLocales } from '../composables/useLocales'
 import { useLocalesStore } from '../stores/use-locales-store'
 import gsapAnimateResultItem from '../util/gsap-animate-result-item'
-import { getValidStringFromAny } from '../util/get-valid-string-from-any'
+import { toSafeString } from '../util/to-safe-string'
 
 const query = ref('')
 const { addLocales } = useLocalesStore()
@@ -31,7 +31,7 @@ async function getTimezone({lat, lon}:{lat: number | null, lon: number | null}):
 		if (!response.ok) return ''
 		const data = await response.json()
 		
-		if (!getValidStringFromAny(data?.timezoneId)) return ''
+		if (!toSafeString(data?.timezoneId)) return ''
 		return data.timezoneId;
 	} catch {
 		return ''
@@ -51,7 +51,7 @@ watch(results, async () => {
 
 <template>
 	<SearchModalVue
-		button-text="Adicionar local"
+		type='time'
 		:is-fetching="isFetching"
 		:results="results"
 		@on-confirm="confirm"

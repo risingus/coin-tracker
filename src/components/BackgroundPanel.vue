@@ -41,10 +41,11 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="z-[-1] absolute inset-0 overflow-hidden">
+	<div class="z-[-1] fixed inset-0 bg-[radial-gradient(circle_at_top_left,rgba(32,226,153,0.02),rgba(6,19,13,1)80%)]">
 		<div class="relative w-full h-full">
-			<div v-for="i in numCircles" :key="i"
-				class="absolute border-4 rounded-full border-black m-auto opacity-0 circle">
+			<div
+v-for="i in numCircles" :key="i"
+				class="absolute border-10 rounded-full border-black m-auto opacity-0 circle">
 			</div>
 		</div>
 	</div>

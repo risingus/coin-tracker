@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ABadge: typeof import('ant-design-vue/es')['Badge']
     AButton: typeof import('ant-design-vue/es')['Button']
     ACard: typeof import('ant-design-vue/es')['Card']
     AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
@@ -17,6 +18,9 @@ declare module 'vue' {
     AModal: typeof import('ant-design-vue/es')['Modal']
     APopconfirm: typeof import('ant-design-vue/es')['Popconfirm']
     AStatistic: typeof import('ant-design-vue/es')['Statistic']
+    ATabPane: typeof import('ant-design-vue/es')['TabPane']
+    ATabs: typeof import('ant-design-vue/es')['Tabs']
+    ATag: typeof import('ant-design-vue/es')['Tag']
     BackgroundPanel: typeof import('./src/components/BackgroundPanel.vue')['default']
     BaseCard: typeof import('./src/components/BaseCard.vue')['default']
     Button: typeof import('./src/components/Button.vue')['default']
@@ -24,10 +28,11 @@ declare module 'vue' {
     Holographic: typeof import('./src/components/Holographic.vue')['default']
     LiquidGlassContainer: typeof import('./src/components/LiquidGlassContainer.vue')['default']
     LocalesCard: typeof import('./src/components/LocalesCard.vue')['default']
+    Panels: typeof import('./src/components/Panels/Panels.vue')['default']
     RateHistoryChart: typeof import('./src/components/RateHistoryChart.vue')['default']
     RatesCard: typeof import('./src/components/RatesCard.vue')['default']
     SearchModal: typeof import('./src/components/SearchModal.vue')['default']
-    SwapyPanelCurrencies: typeof import('./src/components/SwapyPanelCurrencies.vue')['default']
-    SwapyPanelLocales: typeof import('./src/components/SwapyPanelLocales.vue')['default']
+    SwapyPanelCurrencies: typeof import('./src/components/Panels/components/SwapyPanelCurrencies.vue')['default']
+    SwapyPanelLocales: typeof import('./src/components/Panels/components/SwapyPanelLocales.vue')['default']
   }
 }

@@ -12,11 +12,11 @@ const emit = defineEmits(['onConfirm', 'onSearch', 'onClose'])
 
 const {
 	results = [],
-	buttonText = '',
+	type,
 	isFetching = false,
 } = defineProps<{
 	results?: unknown[]
-	buttonText?: string
+	type: 'coin' | 'time'
 	isFetching?: boolean
 }>()
 
@@ -174,5 +174,11 @@ onUnmounted(() => {
 			</div>
 		</div>
 	</a-modal>
-	<a-button type="primary" @click="handleOpenModal">{{ buttonText }}</a-button>
+	<a-button type="primary" @click="handleOpenModal">
+			<div class='flex flex-row gap-2 items-center'>
+				Adicionar
+			<i v-if="type === 'coin'" class="pi pi-bitcoin"></i>
+			<i v-if="type !== 'coin'" class="pi pi-clock"></i>
+			</div>
+	</a-button>
 </template>

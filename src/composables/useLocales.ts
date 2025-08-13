@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/vue-query';
-import { getValidStringFromAny } from '../util/get-valid-string-from-any';
+import { toSafeString } from '../util/to-safe-string';
 import { computed, type Ref } from 'vue';
 
 interface CityResponse {
@@ -17,10 +17,10 @@ async function getCountries(query: string) {
   return Array.isArray(data)
     ? data.map((country) => {
       return {
-        name: getValidStringFromAny(country?.name?.nativeName?.por?.common) || getValidStringFromAny(country?.name?.common),
+        name: toSafeString(country?.name?.nativeName?.por?.common) || toSafeString(country?.name?.common),
         lat: typeof country?.latlng?.[0] === 'number' ? country?.latlng?.[0] : null,
         lon: typeof country?.latlng?.[1] === 'number' ? country?.latlng?.[1] : null,
-        countryCode: getValidStringFromAny(country?.cca2),
+        countryCode: toSafeString(country?.cca2),
         type: 'País',
       }
     })
@@ -54,12 +54,12 @@ async function getCitites(query: string) {
 
     return data.map((city) => {
       return {
-        name: getValidStringFromAny(city?.name),
+        name: toSafeString(city?.name),
         lat: typeof city?.latitude === 'number' ? city?.latitude : null,
         lon: typeof city?.longitude === 'number' ? city?.longitude : null,
-        countryCode: getValidStringFromAny(city?.countryCode),
+        countryCode: toSafeString(city?.countryCode),
         type: 'Cidade',
-        }
+      }
     })
   } catch (err) {
     console.warn(err)
@@ -106,7 +106,7 @@ const useLocales = (query: Ref<string>) => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     retryDelay: 1000, // ? 1 segundo
-    enabled: computed(() => getValidStringFromAny(query.value).length > 2),
+    enabled: computed(() => toSafeString(query.value).length > 2),
     staleTime: 1000 * 60 * 120, // ? 2 horas
   })
 }

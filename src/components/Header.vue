@@ -5,7 +5,7 @@ class='relative z-10 w-full min-h-[60px] flex items-center justify-center px-6 m
   shadow-[0_2px_15px_rgba(32,226,153,0.25)]'>
   <div class='flex flex-row items-center'>
     <img src='../assets/img/coin.svg' class='w-8' />
-    <strong class='strong'>Coin-Tracker</strong>
+    <strong class='font-[kaushan] text-lg'>Coin-tracker</strong>
   </div>
 </header>
 </template>

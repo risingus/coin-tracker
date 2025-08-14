@@ -6,6 +6,11 @@
   src: url('../src/assets/fonts/Nunito-VariableFont_wght.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Kaushan';
+  src: url('../src/assets/fonts/KaushanScript-Regular.ttf') format('truetype');
+}
+
 :root {
   --dark: hsl(150, 50%, 1%);
   --green: hsl(156, 88%, 52%);

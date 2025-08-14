@@ -24,8 +24,8 @@ async function getTimezone({lat, lon}:{lat: number | null, lon: number | null}):
 		const params = new URLSearchParams();
 		params.append('lat', String(lat));
 		params.append('lng', String(lon));
-		params.append('username', 'risingus');
-		const response = await fetch('http://api.geonames.org/timezoneJSON' + '?' + params, {
+		params.append('username', import.meta.env.VITE_GEONAMES_API_USER);
+		const response = await fetch('https://secure.geonames.org/timezoneJSON' + '?' + params, {
 			method: 'get',
 		})
 		if (!response.ok) return ''

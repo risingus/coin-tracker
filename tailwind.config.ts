@@ -11,6 +11,7 @@ const config: Config = {
       // Sua configuração de fontes
       fontFamily: {
         nunito: ['Nunito', 'sans-serif'],
+        kaushan: ['Kaushan', 'sans-serif']
       },
       // Sua configuração de cores
       colors: {

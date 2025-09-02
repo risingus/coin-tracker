@@ -43,6 +43,16 @@ body {
   box-sizing: border-box;
 }
 
+body::-moz-selection {
+	color: var(--text-primary);
+	background:  var(--primary);
+}
+
+body::selection {
+  color: var(--text-primary);
+	background:  var(--primary);
+}
+
 .result-item {
   will-change: transform, opacity;
   @apply gap-4 cursor-pointer w-full rounded-md transition-colors duration-200 border-2 border-transparent pt-0.5 pb-0.5 pr-1 pl-1 ;

@@ -33,13 +33,13 @@ function changeActiveTab(newValue: string) {
 
 <template>
 	<div class="w-full flex flex-row justify-center">
-		<div class="max-w-[1440px] grow-1">
+		<div class="max-w-[1000px] grow-1">
 			<a-tabs v-model:active-key="activeTab" centered @change="changeActiveTab">
 				<a-tab-pane :key="tabValues.coin">
 					<template #tab>
 						<i class="pi pi-bitcoin"></i>
 					</template>
-					<SwapyPanelCurrencies />
+						<SwapyPanelCurrencies />
 				</a-tab-pane>
 				<a-tab-pane :key="tabValues.clocks" force-render>
 					<template #tab>

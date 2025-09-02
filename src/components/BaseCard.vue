@@ -9,10 +9,12 @@ interface BaseCardProps extends Omit<CardProps, 'size'> {
 }
 
 const props = withDefaults(defineProps<BaseCardProps>(), {
-  size: 'default',
+  size: 'small',
   hoverable: false,
   bordered: true,
   loading: false,
+  extra: '',
+  title: ''
 });
 </script>
 
@@ -25,9 +27,9 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
     :extra="props.extra"
     :loading="props.loading"
     class='bg-base'
+    body-style="padding: 8px;"
   >
     <slot />
-
     <template v-if="$slots.title" #title>
       <slot name="title" />
     </template>

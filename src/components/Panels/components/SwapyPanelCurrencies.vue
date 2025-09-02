@@ -4,7 +4,7 @@ import { createSwapy, type Swapy, utils, type SlotItemMapArray } from 'swapy'
 import { computed, onMounted, onUnmounted, ref, watch, toRaw } from 'vue'
 import { useCurrenciesStore } from '../../../stores/use-currencies-store'
 import { toSafeString } from '@/util/to-safe-string'
-import RatesCard from '@/components/RatesCard.vue'
+import RatesCard from '@/components/RatesCard/index.vue'
 import AddCurrencyModal from '@/components/AddCurrencyModal.vue'
 
 const store = useCurrenciesStore()
@@ -14,10 +14,10 @@ const swapy = ref<Swapy | null>(null)
 const container = ref<HTMLElement | null>()
 
 const slotItemMap = ref<SlotItemMapArray>([
-	...utils.initSlotItemMap(currencies.value, 'code'),
+	...utils.initSlotItemMap(currencies.value, 'id'),
 ])
 const slottedItems = computed(() =>
-	utils.toSlottedItems(currencies.value, 'code', slotItemMap.value)
+	utils.toSlottedItems(currencies.value, 'id', slotItemMap.value)
 )
 
 watch(currencies, () => {
@@ -25,7 +25,7 @@ watch(currencies, () => {
 		utils.dynamicSwapy(
 			swapy.value,
 			currencies.value,
-			'code',
+			'id',
 			slotItemMap.value,
 			(value: SlotItemMapArray) => (slotItemMap.value = value)
 		),
@@ -43,10 +43,9 @@ onMounted(() => {
 			requestAnimationFrame(() => {
 				slotItemMap.value = newOrder
 			})
-
 			const mappedOrder = newOrder
 				.map((item) => {
-					const currency = currencies.value.find((c) => c.code === item.item)
+					const currency = currencies.value.find((c) => c.id === item.item)
 					if (!currency) return
 					return toRaw(currency)
 				})
@@ -76,12 +75,12 @@ onUnmounted(() => {
 				</a-badge>
 				<AddCurrencyModal />
 		</div>
-		<div
-			v-for="{ slotId, itemId, item: currency } in slottedItems"
+			<div
+			v-for="({ slotId, itemId, item: currency }, index) in slottedItems"
 			:key="slotId"
 			:data-swapy-slot="slotId">
 			<div v-if="currency" :key="itemId" :data-swapy-item="itemId">
-				<RatesCard :currency="currency" />
+				<RatesCard :currency="currency" :index="index" />
 			</div>
 		</div>
 	</div>

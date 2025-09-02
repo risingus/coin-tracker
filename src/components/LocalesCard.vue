@@ -38,12 +38,12 @@ onUnmounted(() => {
 
 <template>
 	<BaseCard >
-		<div class="grid grid-cols-[5rem_1fr_2rem] gap-4 items-center h-18">
+		<div class="grid grid-cols-[5rem_1fr_1.5rem] items-center h-16">
 			<a-statistic title="Hora" :value="formattedTime" />
 			<a-statistic title="Local" :value="locale.name" class='truncate' />
 			<a-popconfirm title="Deletar horário?" ok-text="Sim" cancel-text="Não" @confirm="() => removeLocales(locale)">
-				<a-button shape="circle" data-swapy-no-drag>
-					<i class="pi pi-trash"></i>
+				<a-button shape="circle" data-swapy-no-drag size="small">
+					<i class="pi pi-trash" style='font-size: 0.75rem;'></i>
 				</a-button>
 			</a-popconfirm>
 		</div>

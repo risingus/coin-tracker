@@ -79,7 +79,7 @@ onUnmounted(() => {
 			v-for="{ slotId, itemId, item: locale } in slottedItems"
 			:key="slotId"
 			:data-swapy-slot="slotId"
-			class="item">
+			>
 			<div v-if="locale" :key="itemId" :data-swapy-item="itemId">
 				<LocalesCard :locale="locale" />
 			</div>

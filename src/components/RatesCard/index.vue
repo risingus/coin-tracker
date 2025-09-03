@@ -14,9 +14,11 @@ const { currency, index } = defineProps<{
 const from = computed(() => {
   return currency?.from?.code || 'USD'
 })
+const to = computed(() => {
+  return currency.code
+})
 
-
-const { data: rate } = useExchangeRates({ from: from.value, to: currency.code })
+const { data: rate } = useExchangeRates({ from, to })
 const chartShow = ref(false)
 const deleteShow = ref(false)
 const editShow = ref(false)

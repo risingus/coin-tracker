@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/vue-query';
 import currenciesUrl from '../constants/currenciesUrl';
+import type { Ref } from 'vue';
 
 const placeholder = {
   value: 0,
@@ -8,8 +9,10 @@ const placeholder = {
 const errorRequest = ({from, to}: {from: string, to: string}) => new Error(`Erro ao converter de ${from} para ${to}`)
 
 async function getExchangeRates({ from, to }: { from: string, to: string }): Promise<{ value: number, currencyValue: string }> {
-  const response = await fetch(currenciesUrl + '/latest' + `?base${from}` + `&currencies=${to}`)
-
+  const params = new URLSearchParams();
+  params.append('base', from);
+  params.append('currencies', to);
+  const response = await fetch(currenciesUrl + '/latest' + '?' + params)
   if (!response.ok) {
     throw errorRequest({from, to})
   }
@@ -30,11 +33,10 @@ async function getExchangeRates({ from, to }: { from: string, to: string }): Pro
   }
 }
 
-
-const useExchangeRates = ({ from, to }: { from: string, to: string }) => {
+const useExchangeRates = ({ from, to }: { from: Ref<string>, to: Ref<string> }) => {
   return useQuery({
     queryKey: ['exchange-rates', from, to],
-    queryFn: () => getExchangeRates({from, to}),
+    queryFn: () => getExchangeRates({ from: from.value, to: to.value }),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     placeholderData: placeholder,

@@ -25,7 +25,13 @@ async function fetchExchangeRatesHistory({ from = '', to = '' }) {
     const startDate = format(sub(new Date(), { days: 30 }), 'yyyy-MM-dd');
     const today = format(new Date(), 'yyyy-MM-dd');
 
-    const response = await fetch(currenciesUrl + '/timeseries' + `?start_date=${startDate}` + `&end_date=${today}` + `&base=${from}` + `&currencies=${to}`)
+    const params = new URLSearchParams();
+    params.append('start_date', startDate);
+    params.append('end_date', today);
+    params.append('base', from);
+    params.append('currencies', to);
+
+    const response = await fetch(currenciesUrl + '/timeseries' + '?' + params)
     
     if (!response.ok) {
       throw fetchExchangeRatesHistoryError(to)
